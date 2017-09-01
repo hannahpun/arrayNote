@@ -1,23 +1,7 @@
 # Array
 這一堂課就是介紹一些 Array 方法，其實陣列技巧常常用到。索性把它全部整理出來讓自己以後也可以快速搜尋。
+每一個小單元都有一個初始值，這樣就不用每一個範例都重覆貼上了
 
-#### 初始值
-```
- const inventors = [
-      { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
-      { first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },
-      { first: 'Galileo', last: 'Galilei', year: 1564, passed: 1642 },
-      { first: 'Marie', last: 'Curie', year: 1867, passed: 1934 },
-      { first: 'Johannes', last: 'Kepler', year: 1571, passed: 1630 },
-      { first: 'Nicolaus', last: 'Copernicus', year: 1473, passed: 1543 },
-      { first: 'Max', last: 'Planck', year: 1858, passed: 1947 },
-      { first: 'Katherine', last: 'Blodgett', year: 1898, passed: 1979 },
-      { first: 'Ada', last: 'Lovelace', year: 1815, passed: 1852 },
-      { first: 'Sarah E.', last: 'Goode', year: 1855, passed: 1905 },
-      { first: 'Lise', last: 'Meitner', year: 1878, passed: 1968 },
-      { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
-    ];
-```
 
 ## Basic Array Method
 #### 初始值
@@ -58,13 +42,65 @@
     console.log(newColor) // 'red'
 ```
 
-* concat
+* Array.prototype.concat()
+把兩個陣列合併在一起，並回傳新陣列
+```
+    const colors2 = ['grey', 'black', 'white'];
+    const newColor = colors.concat(colors2);
 
-
+    console.log(colors) // ['red', 'yellow', 'blue'] 原本的
+    console.log(newColor) // ['red', 'yellow', 'blue', 'grey', 'black', 'white' ]
+```
 ## Filter somthing
+#### 初始值
+```
+ const inventors = [
+      { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
+      { first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },
+      { first: 'Galileo', last: 'Galilei', year: 1564, passed: 1642 },
+      { first: 'Marie', last: 'Curie', year: 1867, passed: 1934 },
+      { first: 'Johannes', last: 'Kepler', year: 1571, passed: 1630 },
+      { first: 'Nicolaus', last: 'Copernicus', year: 1473, passed: 1543 },
+      { first: 'Max', last: 'Planck', year: 1858, passed: 1947 },
+      { first: 'Katherine', last: 'Blodgett', year: 1898, passed: 1979 },
+      { first: 'Ada', last: 'Lovelace', year: 1815, passed: 1852 },
+      { first: 'Sarah E.', last: 'Goode', year: 1855, passed: 1905 },
+      { first: 'Lise', last: 'Meitner', year: 1878, passed: 1968 },
+      { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
+    ];
+```
 * Array.prototype.find(item, index, array)
+回傳一個值，且是**第一個**抓到條件為 true 的值
+```
+const findEmpty = inventors.find(function(item){
+    
+})
+console.log(findEmpty) // 沒有條件會 undefined
+
+const findInventors = inventors.find(function(item){
+    return item.year > 1870;
+})
+console.log(findInventors) // 有好幾個是 > 1800 的，但他指會回傳第一個抓到的 { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 }
+```
 * Array.prototype.filter(item, index, array)
+回傳一個陣列，只要條件為 true 的就會包含在此陣列，適合拿來搜尋 
+```
+const filterEmpty = inventors.filter(function(item){
+    
+})
+console.log(filterEmpty) // 沒有條件會 undefined
+
+const filterInventors = inventors.filter(function(item){
+    return item.year > 1870;
+})
+console.log(findInventors) // [{first: "Albert", last: "Einstein", year: 1879, passed: 1955}
+{first: "Katherine", last: "Blodgett", year: 1898, passed: 1979}, {first: "Lise", last: "Meitner", year: 1878, passed: 1968}]
+```
 * Array.prototype.forEach(item, index, array)
+forEach 不會回傳任何東西，單純只執行原本陣列裡的事
+```
+
+```
 * Array.prototype.map(item, index, array)
 * Array.prototype.some(item, index, array)
 * Array.prototype.every(item, index, array)
