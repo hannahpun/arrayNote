@@ -17,7 +17,7 @@
     console.log(colors) // ['red', 'yellow', 'blue', 'purple', 'green']
     console.log(newColor) // 5
 ```
-* Array.prototype.unshift(elementN)
+* Array.prototype.unshift(elementN)  
 在原本的陣列 **前面** 加上新值，會回傳 length
 ```
     const newColor = colors.unshift('purple', 'green');
@@ -25,7 +25,7 @@
     console.log(colors) // ['purple', 'green', 'red', 'yellow', 'blue' ]
     console.log(newColor) // 5
 ```
-* Array.prototype.pop()
+* Array.prototype.pop()  
 移除原本陣列 **最後面** 的第一個值，回傳被移除掉的那個值
 ```
     const newColor = colors.pop();
@@ -33,7 +33,7 @@
     console.log(colors) // ['red', 'yellow']
     console.log(newColor) // 'blue'
 ```
-* Array.prototype.shift()
+* Array.prototype.shift()  
 移除原本陣列 **最前面** 的第一個值，回傳被移除掉的那個值
 ```
     const newColor = colors.shift();
@@ -42,7 +42,7 @@
     console.log(newColor) // 'red'
 ```
 
-* Array.prototype.concat()
+* Array.prototype.concat()  
 把兩個陣列合併在一起，並回傳新陣列
 ```
     const colors2 = ['grey', 'black', 'white'];
@@ -69,7 +69,7 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 ```
-* Array.prototype.find(item, index, array)
+* Array.prototype.find(item, index, array)  
 回傳一個值，且是**第一個**抓到條件為 true 的值
 ```
 const findEmpty = inventors.find(function(item){
@@ -82,7 +82,7 @@ const findInventors = inventors.find(function(item){
 })
 console.log(findInventors) // 有好幾個是 > 1800 的，但他指會回傳第一個抓到的 { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 }
 ```
-* Array.prototype.filter(item, index, array)
+* Array.prototype.filter(item, index, array)  
 回傳一個陣列，只要條件為 true 的就會包含在此陣列，適合拿來搜尋 
 ```
 const filterEmpty = inventors.filter(function(item){
@@ -96,23 +96,151 @@ const filterInventors = inventors.filter(function(item){
 console.log(findInventors) // [{first: "Albert", last: "Einstein", year: 1879, passed: 1955}
 {first: "Katherine", last: "Blodgett", year: 1898, passed: 1979}, {first: "Lise", last: "Meitner", year: 1878, passed: 1968}]
 ```
-* Array.prototype.forEach(item, index, array)
+* Array.prototype.forEach(item, index, array)  
 forEach 不會回傳任何東西，單純只執行原本陣列裡的事
 ```
-
+const forEachInventors = inventors.forEach(function(item){
+    return item.year > 1870;
+})
+console.log(forEachInventors) // undefined, 不會 return 東西
+inventors.forEach(function(item){
+    item.year =  1870;
+}) 
+console.log(inventors) // 全部 12 個的 year = 1870
 ```
-* Array.prototype.map(item, index, array)
-* Array.prototype.some(item, index, array)
-* Array.prototype.every(item, index, array)
+* Array.prototype.map(item, index, array)  
+將條件運算後重新組合回傳一個數量等於 array.length 的陣列
+```
+const mapInventors = inventors.map(function(item){
+    return item.year > 1870;
+})
+console.log(mapInventors) // [false, false, true ... 12 個]
 
+const mapInventors2 = inventors.map(function(item){
+    if(item.year > 1870){
+        return `${item.year}歲`;
+    }
+    return false;
+})
+console.log(mapInventors2) // ["1879歲", false, false....] 就算是空的還是 false 還是會回傳喔
+```
+* Array.prototype.some(item, index, array)  
+回傳一個值 false/true，只要部分符合就回傳 true
+```
+const someInventors = inventors.some(function(item){
+    return item.year > 1870;
+})
+console.log(mapInventors) // true
+```
+* Array.prototype.every(item, index, array)  
+回傳一個值 false/true，需要全部符合才回傳 true, 部分符合會回傳 false
+```
+const everyInventors = inventors.every(function(item){
+    return item.year > 1870;
+})
+console.log(everyInventors) // false
+```
 
 ## Special
-* Array.prototype.reduce(accumulator, currentValue, currentIndex, array [, initialValue])
+#### 初始值
+```
+var special = [8, 0, 14];
+```
+* Array.prototype.reduce(accumulator, currentValue, currentIndex, array [, initialValue])  
+回傳運算結果得值．reduce 很特別，他可以與前一個值做運算，先來名詞解釋一下  
+accumulator(前一個參數，從 initialValue 開始．若沒有 initialValue 就是從陣列 0 開始) currentIndex(現在的參數) array (全部陣列) initialValue(可以給一個初始值開始)
 
+```
+const reduceInventors = inventors.reduce(function(accumulator, currentValue, currentIndex){
+    return Math.max(accumulator, currentValue);
+})
+console.log(reduceInventors) // 14
+```
+這裡要插入
+| callback   |      accumulator      |  currentValue |currentIndex |  array | return value
+|----------|:-------------:|------:|------:|------:|------:|
+| first call |  8 | 0 | 1|[8, 0, 14] | 8
+| second call|    8   |   14 |2|[8, 0, 14] |14
+```
+// 給初始值的狀況  
+const reduceInventors2 = inventors.reduce(function(accumulator, currentValue, currentIndex){
+    return Math.max(accumulator, currentValue);
+},30)
+console.log(reduceInventors2) // 30
+```
+| callback   |      accumulator      |  currentValue |currentIndex |  array | return value
+|----------|:-------------:|------:|------:|------:|------:|
+| first call |  30 | 8 | 0|[8, 0, 14] | 30
+| second call|    30   |   0 |1|[8, 0, 14] |30
+| third call|    30   |   12 |2|[8, 0, 14] |30
 ## Order
-* Array.prototype.sort(a, b)
-* Array.prototype.reverse()
+* Array.prototype.sort(compareFunction)  
+若沒有 compareFunction ，會回傳一個根據 [Unicode](http://jrgraphix.net/r/Unicode/0020-007F) 排序 array.length 長度的 array
+```
+var fruit = ['cherries', 'apples', 'bananas'];
+fruit.sort(); // ['apples', 'bananas', 'cherries']
 
+var scores = [1, 10, 21, 2]; 
+scores.sort(); // [1, 10, 2, 21]
+//  跟你想的不一樣吧，因為 10 是兩個數字組成，在 unicode 裡 32(數字2） > 31(1 開頭的任何數字)
+
+var things = ['word', 'Word', '1 Word', '2 Words'];
+things.sort(); // ['1 Word', '2 Words', 'Word', 'word']
+```
+若有 compareFunction 會有兩個參數 a / b, Array.prototype.sort(a, b)  
+```
+function compare(a, b) {
+  // 若 a 比較小 排序就是 a, b
+  if (a is less than b by some ordering criterion) {
+    return -1;
+  }
+  // 若 a 比較大 排序就是 b, a
+  if (a is greater than b by the ordering criterion) {
+    return 1;
+  }
+  // 若一樣
+  return 0;
+}
+```
+```
+var items = [
+  { name: 'Edward', value: 21 },
+  { name: 'Sharpe', value: 37 },
+  { name: 'And', value: 45 },
+  { name: 'The', value: -12 },
+  { name: 'Magnetic', value: 13 },
+  { name: 'Zeros', value: 37 }
+];
+
+// sort by value 快速寫法
+items.sort(function (a, b) {
+  return a.value - b.value;
+});
+
+// sort by name
+items.sort(function(a, b) {
+  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+});
+```
+* Array.prototype.reverse()
+相對單純的一個方法，回傳反過來的一個長度為 array.length 的陣列
+```
+var a = ['one', 'two', 'three'];
+var reversed = a.reverse(); 
+
+console.log(a);        // ['three', 'two', 'one']
+console.log(reversed); // ['three', 'two', 'one']
+```
 ## Operation
 * 
 
