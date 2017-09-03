@@ -156,7 +156,6 @@ const reduceInventors = inventors.reduce(function(accumulator, currentValue, cur
 })
 console.log(reduceInventors) // 14
 ```
-這裡要插入
 | callback   |      accumulator      |  currentValue |currentIndex |  array | return value
 |----------|:-------------:|------:|------:|------:|------:|
 | first call |  8 | 0 | 1|[8, 0, 14] | 8
