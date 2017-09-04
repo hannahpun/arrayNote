@@ -261,7 +261,7 @@ console.log(sliceArray); // [3, 8, 6, 0]
 const sliceNegativeArray = my_array.slice(-1);
 console.log(sliceNegativeArray); // [0]
 ```
-* Array.prototype.splice(start, deleteCount, item1, item2, ...)
+* Array.prototype.splice(start, deleteCount, item1, item2, ...)  
 回傳被移掉的值放在陣列裡。splice 乍看下跟 slice 有點像，但其實幾乎完全相反(驚)。slice 是取 start end 裡的東西，而 splice 是 return 中間被移掉的東西。slice 不會影響本來陣列而 splice 就是影響了原本陣列。 新增的 item1, item2 只會影響本來陣列，並不會回傳到新的陣列裡 
 splice 是拼接的意思你不但可以切掉某塊還可以塞東西進去。
 ```
@@ -285,7 +285,7 @@ const spliceArray4 = my_array.splice(1, 3, 'Hana', 'Mike')
 console.log(spliceArray4); // [1, 3, 8] // 不會有 'Hana', 'Mike' 字眼出現
 console.log(my_array); // [5, "Hana", "Mike", 6, 0] 從 index 1 開始抓 3 個 把中間值移掉 並塞進 "Hana", "Mike"
 ```
-* Array.prototype.indexOf(searchElement) 
+* Array.prototype.indexOf(searchElement)  
 回傳所在位置的 index，如果找不到會回傳 -1
 ```
 const indexArray = my_array.indexOf(3) // 2
