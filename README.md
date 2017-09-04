@@ -1,6 +1,6 @@
 # Array
 這一堂課就是介紹一些 Array 方法，其實陣列技巧常常用到。索性把它全部整理出來讓自己以後也可以快速搜尋。
-每一個小單元都有一個初始值，這樣就不用每一個範例都重覆貼上了
+每一個小單元都有一個初始值，這樣就不用每一個範例都重覆貼上了。花了很多時間整理希望對自己跟路過的人有幫助
 
 
 ## Basic Array Method
@@ -241,16 +241,81 @@ console.log(a);        // ['three', 'two', 'one']
 console.log(reversed); // ['three', 'two', 'one']
 ```
 ## Operation
-* 
+* const my_array = [5, 1, 3, 8, 6, 0]
 
-## add or remove some item in Array
-* slice
-* indexOf
-* join
-* splice
-* [include](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+## get some item in Array
+#### 初始值
+* Array.prototype.slice(start, end)  
+slice 就是切，把 array 頭尾切兩刀。回傳在 start(包含) 跟 end 之間的陣列。經過 slice 後原本陣列不會改變
+```
+const sliceArray = my_array.slice(2,5);
+console.log(sliceArray); // [3, 8, 6]
+console.log(my_array); // [5, 1, 3, 8, 6, 0] 不會變
+```
+Array.prototype.slice(start) 
+假如只有一個值就是只切一刀，負數就是從後面切
+```
+const sliceArray = my_array.slice(2);
+console.log(sliceArray); // [3, 8, 6, 0]
 
+const sliceNegativeArray = my_array.slice(-1);
+console.log(sliceNegativeArray); // [0]
+```
+* Array.prototype.splice(start, deleteCount, item1, item2, ...)
+回傳被移掉的值放在陣列裡。splice 乍看下跟 slice 有點像，但其實幾乎完全相反(驚)。slice 是取 start end 裡的東西，而 splice 是 return 中間被移掉的東西。slice 不會影響本來陣列而 splice 就是影響了原本陣列。 新增的 item1, item2 只會影響本來陣列，並不會回傳到新的陣列裡 
+splice 是拼接的意思你不但可以切掉某塊還可以塞東西進去。
+```
+// 假如只有 splice(start)，這時會跟 slice 行為一樣
+const spliceArray1 = my_array.splice(3)
+console.log(spliceArray1); // [8, 6, 0] 被移掉的值
+console.log(my_array); // [5, 1, 3]，index 3 後面都移掉
 
+//一樣可以接受負數
+const spliceArray2 = my_array.splice(-1)
+console.log(spliceArray2); // [0]
+console.log(my_array); // [5, 1, 3, 8, 6] 倒數 1 個後面都移掉
+
+// splice(start, deleteCount 抓幾個) 
+const spliceArray3 = my_array.splice(1, 3)
+console.log(spliceArray3); // [1, 3, 8] 
+console.log(my_array); // [5, 6, 0] 從 index 1 開始抓 3 個 把中間值移掉
+
+// splice(start, deleteCount 抓幾個, 插入 item) 
+const spliceArray4 = my_array.splice(1, 3, 'Hana', 'Mike') 
+console.log(spliceArray4); // [1, 3, 8] // 不會有 'Hana', 'Mike' 字眼出現
+console.log(my_array); // [5, "Hana", "Mike", 6, 0] 從 index 1 開始抓 3 個 把中間值移掉 並塞進 "Hana", "Mike"
+```
+* Array.prototype.indexOf(searchElement) 
+回傳所在位置的 index，如果找不到會回傳 -1
+```
+const indexArray = my_array.indexOf(3) // 2
+console.log(indexArray) // 2
+console.log(my_array) // [5, 1, 3, 8, 6, 0]
+
+const indexArray2 = my_array.indexOf(100)
+console.log(indexArray) // -1
+```
+* Array.prototype.join(separator)  
+把所有陣列裡的值加上 separator，回傳一個字串
+```
+const joinArray = my_array.join('-') // 2
+console.log(joinArray) // '5-1-3-8-6-0'
+console.log(my_array) // [5, 1, 3, 8, 6, 0]
+
+const joinArray2 = my_array.join('') // 2
+console.log(joinArray2) // '513860'
+```
+
+* Array.prototype.include(searchElement, fromIndex)
+看 searchElement 有沒有在 array 裡，回傳 true 或 false
+```
+const includesArray = my_array.includes(3)
+console.log(includesArray) // true
+console.log(my_array) // [5, 1, 3, 8, 6, 0]
+
+my_array.includes(5,3) // false 從 index 第三個之後找 5
+
+```
 
 ### Reference
 * [javaScript 陣列處理方法](https://wcc723.github.io/javascript/2017/06/29/es6-native-array/#Array-prototype-forEach)
